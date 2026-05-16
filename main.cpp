@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 using namespace std;
 
 struct User {
@@ -16,6 +17,40 @@ struct Route {
 vector<User> users;
 vector<Route> routes;
 
+void saveData() {
+    ofstream fout("data.txt");
+    for (auto &u : users) {
+        fout << u.id << " " << u.name << "\n";
+    }
+    fout << "---\n"; // ngăn cách user và route
+    for (auto &r : routes) {
+        fout << r.userId << " " << r.destination << "\n";
+    }
+    fout.close();
+}
+
+void loadData() {
+    ifstream fin("data.txt");
+    if (!fin) return; // chưa có file thì bỏ qua
+    users.clear();
+    routes.clear();
+
+    string line;
+    while (fin >> line && line != "---") {
+        User u;
+        u.id = stoi(line);
+        fin >> u.name;
+        users.push_back(u);
+    }
+    while (fin >> line) {
+        Route r;
+        r.userId = stoi(line);
+        fin >> r.destination;
+        routes.push_back(r);
+    }
+    fin.close();
+}
+
 void registerUserAndRoute() {
     int id = users.size() + 1;
     string name, dest;
@@ -30,7 +65,10 @@ void registerUserAndRoute() {
 
     cout << "Dang ky thanh cong!\n";
 
-    // Sau khi đăng ký, kiểm tra người phù hợp
+    // Lưu dữ liệu sau khi đăng ký
+    saveData();
+
+    // Kiểm tra người phù hợp
     bool found = false;
     for (auto &other : routes) {
         if (other.userId != id && other.destination == dest) {
@@ -40,12 +78,12 @@ void registerUserAndRoute() {
             found = true;
         }
     }
-    if (!found) {
-        cout << "Khong co nguoi phu hop.\n";
-    }
+    if (!found) cout << "Khong co nguoi phu hop.\n";
 }
 
 int main() {
+    loadData(); // đọc dữ liệu cũ khi khởi động
+
     int choice;
     bool running = true;
 
