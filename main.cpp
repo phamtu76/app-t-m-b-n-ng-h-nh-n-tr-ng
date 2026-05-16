@@ -22,7 +22,7 @@ void saveData() {
     for (auto &u : users) {
         fout << u.id << " " << u.name << "\n";
     }
-    fout << "---\n"; // ngăn cách user và route
+    fout << "---\n";
     for (auto &r : routes) {
         fout << r.userId << " " << r.destination << "\n";
     }
@@ -31,7 +31,7 @@ void saveData() {
 
 void loadData() {
     ifstream fin("data.txt");
-    if (!fin) return; // chưa có file thì bỏ qua
+    if (!fin) return;
     users.clear();
     routes.clear();
 
@@ -64,11 +64,7 @@ void registerUserAndRoute() {
     routes.push_back({id, dest});
 
     cout << "Dang ky thanh cong!\n";
-
-    // Lưu dữ liệu sau khi đăng ký
     saveData();
-
-    // Kiểm tra người phù hợp
     bool found = false;
     for (auto &other : routes) {
         if (other.userId != id && other.destination == dest) {
@@ -80,10 +76,8 @@ void registerUserAndRoute() {
     }
     if (!found) cout << "Khong co nguoi phu hop.\n";
 }
-
 int main() {
-    loadData(); // đọc dữ liệu cũ khi khởi động
-
+    loadData();
     int choice;
     bool running = true;
 
