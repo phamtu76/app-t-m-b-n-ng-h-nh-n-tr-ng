@@ -78,3 +78,29 @@ int main() {
                     currentUser = id;
                     cout << "Dang nhap voi user " << users[id - 1].name << "\n";
                 } else {
+                    cout << "Khong ton tai nguoi dung nay.\n";
+                }
+                break;
+            }
+            case 3:
+                if (currentUser != -1)
+                    addRoute(currentUser);
+                else
+                    cout << "Vui long chon nguoi dung truoc!\n";
+                break;
+            case 4:
+                if (currentUser != -1)
+                    findMatches(currentUser);
+                else
+                    cout << "Vui long chon nguoi dung truoc!\n";
+                break;
+            case 5:
+                cout << "Tam biet!\n";
+                running = false;
+                break;
+            default:
+                cout << "Lua chon khong hop le.\n";
+        }
+    }
+    return 0;
+}
