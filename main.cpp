@@ -50,28 +50,26 @@ void findMatches(int userId) {
 }
 
 int main() {
-    int choice;
+    int choice = 0;
     int currentUser = -1;
     bool running = true;
 
     while (running) {
-        cout << "\n--- MENU ---\n";
-        cout << "1. Dang ky\n";
-        cout << "2. Chon nguoi dung\n";
-        cout << "3. Them lo trinh\n";
-        cout << "4. Tim ban dong hanh\n";
-        cout << "5. Thoat\n";
-        cout << "Chon: ";
+        cout << "\n--- MENU ---\n"
+             << "1. Dang ky | 2. Chon nguoi dung | 3. Them lo trinh | 4. Tim ban dong hanh | 5. Thoat\n"
+             << "Nhap lua chon: ";
 
         if (!(cin >> choice)) {
-            cin.clear();              // xóa trạng thái lỗi
-            cin.ignore(1000, '\n');   // bỏ dữ liệu sai
+            cin.clear();
+            cin.ignore(1000, '\n');
             cout << "Nhap sai! Vui long nhap so tu 1-5.\n";
             continue;
         }
 
         switch (choice) {
-            case 1: registerUser(); break;
+            case 1:
+                registerUser();
+                break;
             case 2: {
                 int id;
                 cout << "Nhap ID nguoi dung: ";
@@ -80,25 +78,3 @@ int main() {
                     currentUser = id;
                     cout << "Dang nhap voi user " << users[id - 1].name << "\n";
                 } else {
-                    cout << "Khong ton tai nguoi dung nay.\n";
-                }
-                break;
-            }
-            case 3:
-                if (currentUser != -1) addRoute(currentUser);
-                else cout << "Vui long chon nguoi dung truoc!\n";
-                break;
-            case 4:
-                if (currentUser != -1) findMatches(currentUser);
-                else cout << "Vui long chon nguoi dung truoc!\n";
-                break;
-            case 5:
-                cout << "Tam biet!\n";
-                running = false;
-                break;
-            default:
-                cout << "Lua chon khong hop le.\n";
-        }
-    }
-    return 0;
-}
